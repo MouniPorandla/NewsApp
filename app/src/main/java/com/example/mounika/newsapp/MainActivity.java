@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             {
 
 
-                textView.setText("Sorry, no text was received");
+                textView.setText("Please enter your requesting text");
             }
         }
     }
