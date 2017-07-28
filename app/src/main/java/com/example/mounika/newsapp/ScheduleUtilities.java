@@ -30,6 +30,7 @@ import com.firebase.jobdispatcher.Trigger;
 
 public class ScheduleUtilities {
     //5) 10pts: Using Firebase's JobDispatcher, modify your app so that it loads new news information every minute.
+    //The time is set into int type and passed in a trigger
     private static final int SCHEDULE_INTERVAL_MINUTES = 360;
     private static final int SYNC_FLEXTIME_SECONDS = 60;
     private static final String NEWS_JOB_TAG = "news_job_tag";

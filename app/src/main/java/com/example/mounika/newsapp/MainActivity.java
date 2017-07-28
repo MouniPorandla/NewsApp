@@ -24,6 +24,7 @@ import com.example.mounika.newsapp.data.DatabaseUtils;
 
 public class MainActivity extends AppCompatActivity
     //2) 10pts: Modify Homework 2 so that AsyncTask is replaced with AsyncTaskLoader, implementing all the required callbacks.
+    //OnCreate,OnStop are the functions in Lifecycle for running the application and
         implements LoaderManager.LoaderCallbacks<Void>, MyAdapter.ItemClickListener {
 
     static final String TAG = "mainactivity";
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity
         rv = (RecyclerView) findViewById(R.id.recyclerView);
         rv.setLayoutManager(new LinearLayoutManager(this));
 //6. 6) 3pts: Have your activity check if the app has been installed before, if not, load data into your database using your network methods.
+        // For checking the app is empty or loaded with data
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isFirst = prefs.getBoolean("isfirst", true);
 

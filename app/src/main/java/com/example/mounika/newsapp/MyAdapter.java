@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
  * Created by mounika on 6/20/17.
  */
 //4) 5pts: Modify your app so that the recyclerview loads from the database.
-
+//To load the data into the database we use cursor,ItemClickListener and Context.
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemHolder>{
 
     private Cursor cursor;
