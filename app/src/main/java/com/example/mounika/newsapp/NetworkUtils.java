@@ -22,11 +22,18 @@ package com.example.mounika.newsapp;
 import android.net.Uri;
 import android.util.Log;
 
+import com.example.mounika.newsapp.data.Article;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -36,47 +43,74 @@ import static android.content.ContentValues.TAG;
 /**
  * These utilities will be used to communicate with the weather servers.
  */
-public final class NetworkUtils {
-    public static final String BASE_URL = "https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey=c51e779ea31f43b6accb7ccb61bf2766";
-    public static final String PARAM_QUERY = "q";
-    public static final String PARAM_SORT = "sort";
+public class NetworkUtils {
+    public static final String TAG = "NetworkUtils";
 
-    public static URL makeURL(String searchQuery, String sortBY) {
+    public static final String GITHUB_BASE_URL = "https://newsapi.org/v1/articles?";
+    public static final String PARAM_QUERY = "source";
+    public static final String PARAM_Q = "sortBy";
+    public static final String PARAM_API_KEY= "apikey";
 
-        Uri uri = Uri.parse(BASE_URL).buildUpon()
-                .appendQueryParameter(PARAM_QUERY, searchQuery)
-                .appendQueryParameter(PARAM_SORT, sortBY).build();
+    public static final String PA = "the-next-web";
+    public static final String PAR = "latest";
+    public static final String api = "c51e779ea31f43b6accb7ccb61bf2766";
+
+    public static URL makeURL() {
+        Uri uri = Uri.parse(GITHUB_BASE_URL).buildUpon()
+                .appendQueryParameter(PARAM_QUERY,PA)
+                .appendQueryParameter(PARAM_Q,PAR)
+                .appendQueryParameter(PARAM_API_KEY,api)
+                .build();
 
         URL url = null;
         try {
-            String urlString = uri.toString();
-            Log.d(TAG, "url:" + urlString);
             url = new URL(uri.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+
+        Log.v(TAG, "Url: " + url);
+
         return url;
     }
 
     public static String getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
         try {
-
-            InputStream giveninput = urlConnection.getInputStream();
-            Scanner input = new Scanner(giveninput);
-
+            InputStream in = urlConnection.getInputStream();
+            Scanner input = new Scanner(in);
 
             input.useDelimiter("\\A");
-            boolean hasInput = input.hasNext();
-            if (hasInput) {
-                return input.next();
-            } else {
-                return null;
-            }
 
-        }finally {
+            String result = (input.hasNext()) ? input.next() : null;
+            return result;
+
+        }catch (IOException e){
+            e.printStackTrace();
+        } finally {
             urlConnection.disconnect();
         }
+        return null;
     }
+
+    public static ArrayList<Article> parseJSON(String json) throws JSONException {
+        ArrayList<Article> result = new ArrayList<>();
+        JSONObject main = new JSONObject(json);
+        JSONArray items = main.getJSONArray("articles");
+
+        for(int i = 0; i < items.length(); i++){
+            JSONObject item = items.getJSONObject(i);
+            String title = item.getString("title");
+            String publishedDate = item.getString("publishedAt");
+            String abstr = item.getString("description");
+            String url = item.getString("url");
+            String img = item.getString("urlToImage");
+
+            result.add(new Article(title, publishedDate, abstr, img, url));
+
+        }
+        return result;
+    }
+
+
 }

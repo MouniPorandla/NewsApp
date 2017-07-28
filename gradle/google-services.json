@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "674904052622",
+    "firebase_url": "https://newsapp-68229.firebaseio.com",
+    "project_id": "newsapp-68229",
+    "storage_bucket": "newsapp-68229.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674904052622:android:9c924bb10a64440c",
+        "android_client_info": {
+          "package_name": "com.example.mounika"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674904052622-bodnr6vld07dgvd7hu8pld68h6ia5u4q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFyU_d1K-N4lUbsL4cB6rIHSRtoY0ir6E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
