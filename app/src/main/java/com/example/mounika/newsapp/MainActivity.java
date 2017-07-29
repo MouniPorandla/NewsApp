@@ -45,14 +45,14 @@ public class MainActivity extends AppCompatActivity
 
         rv = (RecyclerView) findViewById(R.id.recyclerView);
         rv.setLayoutManager(new LinearLayoutManager(this));
-//6. 6) 3pts: Have your activity check if the app has been installed before, if not, load data into your database using your network methods.
+// 6) 3pts: Have your activity check if the app has been installed before, if not, load data into your database using your network methods.
         // For checking the app is empty or loaded with data
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean isFirst = prefs.getBoolean("isfirst", true);
+        SharedPreferences obj = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isFirst = obj.getBoolean("isfirst", true);
 
         if (isFirst) {
             load();
-            SharedPreferences.Editor editor = prefs.edit();
+            SharedPreferences.Editor editor = obj.edit();
             editor.putBoolean("isfirst", false);
             editor.commit();
         }

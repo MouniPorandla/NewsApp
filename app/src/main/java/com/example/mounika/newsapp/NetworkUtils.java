@@ -21,13 +21,10 @@ package com.example.mounika.newsapp;
 
 import android.net.Uri;
 import android.util.Log;
-
 import com.example.mounika.newsapp.data.Article;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -35,11 +32,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-
-
 import static android.content.ContentValues.TAG;
-
 /**
  * These utilities will be used to communicate with the weather servers.
  */
@@ -47,25 +40,29 @@ public class NetworkUtils {
     public static final String TAG = "NetworkUtils";
 
     public static final String GITHUB_BASE_URL = "https://newsapi.org/v1/articles?";
-    public static final String PARAM_QUERY = "source";
-    public static final String PARAM_Q = "sortBy";
-    public static final String PARAM_API_KEY= "apikey";
+    public static final String PARAMETER_API_KEY= "apikey";
+    public static final String PARAMETER_SORTBY = "sortBy";
+    public static final String PARAMETER_QUERY = "source";
+    public static final String Api_key= "c51e779ea31f43b6accb7ccb61bf2766";
+    public static final String Nextweb = "the-next-web";
+    public static final String Latest = "latest";
 
-    public static final String PA = "the-next-web";
-    public static final String PAR = "latest";
-    public static final String api = "c51e779ea31f43b6accb7ccb61bf2766";
 
-    public static URL makeURL() {
+    public static URL makeURL()
+    {
         Uri uri = Uri.parse(GITHUB_BASE_URL).buildUpon()
-                .appendQueryParameter(PARAM_QUERY,PA)
-                .appendQueryParameter(PARAM_Q,PAR)
-                .appendQueryParameter(PARAM_API_KEY,api)
+                .appendQueryParameter( PARAMETER_QUERY,Nextweb)
+                .appendQueryParameter(PARAMETER_SORTBY,Latest)
+                .appendQueryParameter(PARAMETER_API_KEY,Api_key)
                 .build();
 
         URL url = null;
-        try {
+        try
+        {
             url = new URL(uri.toString());
-        } catch (MalformedURLException e) {
+        }
+        catch (MalformedURLException e)
+        {
             e.printStackTrace();
         }
 
@@ -76,7 +73,8 @@ public class NetworkUtils {
 
     public static String getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        try {
+        try
+        {
             InputStream in = urlConnection.getInputStream();
             Scanner input = new Scanner(in);
 
@@ -85,9 +83,13 @@ public class NetworkUtils {
             String result = (input.hasNext()) ? input.next() : null;
             return result;
 
-        }catch (IOException e){
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
-        } finally {
+        }
+        finally
+        {
             urlConnection.disconnect();
         }
         return null;
@@ -98,7 +100,8 @@ public class NetworkUtils {
         JSONObject main = new JSONObject(json);
         JSONArray items = main.getJSONArray("articles");
 
-        for(int i = 0; i < items.length(); i++){
+        for(int i = 0; i < items.length(); i++)
+        {
             JSONObject item = items.getJSONObject(i);
             String title = item.getString("title");
             String publishedDate = item.getString("publishedAt");
